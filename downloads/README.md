@@ -25,3 +25,11 @@ Download campus-xdr-existing-vms.zip. This replaces the earlier full-clone workf
 The package selects 26 existing VMs from the supplied 51-VM inventory, excluding the named original bases. It contains 9 switches and 41 links, with automatic startup disabled. Current guest memory totals 16GiB for the smallest 8-VM profile, plus host/GNS3 overhead. Zeek and Suricata are inline and require transparent bridges; Sophos VMs are a candidate HA pair, while pfSense/Windows7 are isolated. HA, guest addressing, sensors and XDR services are not configured or validated on the PC.
 
 The read-only checker verifies exact existing VM names/UUIDs, current disks, accessible disk parent chains and power-off state. The package contains no clone or setup tool. Import/start in GNS3 can change selected existing VM NICs; retained guest settings must be reviewed. Parent-dependent disk files/snapshots must be retained. Unselected VMs are untouched. The raw 51-VM inventory is not included. Schema validation and 55 automated tests passed; PC boot/connectivity remains unverified.
+
+## Evidence-based PC diagnostics (full runtime verification is NOT complete)
+
+Use campus-validation-tools.zip by extracting its files into the existing campus project folder. Open the GNS3 project, start only CORE1 and wait for its login screen, then run verify-campus.bat. Send verification-results-*/verification.json. The tool does not start/configure/clone/stop VMs and does not treat missing guest evidence or unrun scenarios as success.
+
+The kit queries actual local VirtualBox/GNS3 nodes, wiring, VLANs, memory and runtime state. Optional Linux guest reports are checked for role/project/hardware identity and freshness before IP/OSPF/kernel route/bridge/service tests are evaluated. Read-only diagnostics cannot complete controlled HA, permit/deny, sensor log delivery or XDR incident/action/rollback scenarios; these remain explicitly unrun until access and actual observations exist.
+
+60 automated tests and actual FRR 8.4.4 syntax parsing of four router templates passed in the development environment. This does NOT validate guest configuration, traffic, Sophos HA or XDR behavior on the user PC. SSH/Guest Additions access still needs to be established; credentials are never requested in chat. Local GNS3 authentication can be entered interactively with verify-campus-auth.bat if needed.
