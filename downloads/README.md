@@ -17,3 +17,11 @@ The check now saves check-result.txt. CHECK PASSED only validates prerequisites;
 Use `virtualbox-vm-list-tool.zip` when you already have cloned VMs and want to reuse them. Extract it and double-click `collect-vms.bat`. It creates a uniquely named result folder with vm-inventory.json, vm-list.csv and vm-list.txt. Share the JSON or text file to map existing VMs into the campus project. No VM is cloned, started, stopped, registered, modified or deleted. Parent-dependent disks are reported; original/full-clone history and GNS3 project use are not guessed. Partial inspection is explicitly marked.
 
 The standalone source is collect_virtualbox.py. Six inventory tests and the current full 50-test suite passed; real PC execution is still required. The original campus clone ZIP is not required for this inventory step.
+
+## Campus project using existing VMs (no new clones)
+
+Download campus-xdr-existing-vms.zip. This replaces the earlier full-clone workflow: do not run the old setup.bat. Extract to a new folder, inspect role-mapping.csv, run check-existing-vms.bat, then open Campus-XDR-existing.gns3 only if the checker passes.
+
+The package selects 26 existing VMs from the supplied 51-VM inventory, excluding the named original bases. It contains 9 switches and 41 links, with automatic startup disabled. Current guest memory totals 16GiB for the smallest 8-VM profile, plus host/GNS3 overhead. Zeek and Suricata are inline and require transparent bridges; Sophos VMs are a candidate HA pair, while pfSense/Windows7 are isolated. HA, guest addressing, sensors and XDR services are not configured or validated on the PC.
+
+The read-only checker verifies exact existing VM names/UUIDs, current disks, accessible disk parent chains and power-off state. The package contains no clone or setup tool. Import/start in GNS3 can change selected existing VM NICs; retained guest settings must be reviewed. Parent-dependent disk files/snapshots must be retained. Unselected VMs are untouched. The raw 51-VM inventory is not included. Schema validation and 55 automated tests passed; PC boot/connectivity remains unverified.
